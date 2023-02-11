@@ -1,0 +1,12 @@
+{
+  "ConnectionStrings": {
+    "ERPCoreDb": "Data Source=LAPTOP-I54HFFRS;Initial Catalog=CloudERP;Persist Security Info=True;User ID=sa;Password=hoangthaibien"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
