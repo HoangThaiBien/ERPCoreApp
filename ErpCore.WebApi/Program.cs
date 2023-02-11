@@ -1,3 +1,6 @@
+using ErpCore.Database.EF;
+using Microsoft.EntityFrameworkCore;
+
 namespace ErpCore.WebApi
 {
     public class Program
@@ -11,22 +14,27 @@ namespace ErpCore.WebApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+
             builder.Services.AddSwaggerGen();
+
+            var connectionString = builder.Configuration.GetConnectionString("ErpCoreDb");
+            builder.Services.AddDbContext<ErpDbContext>(options => options.UseSqlServer(connectionString));
+
             builder.Services.AddCors(options => options.AddDefaultPolicy(policy => 
             policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-            var app = builder.Build();
 
+            var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 

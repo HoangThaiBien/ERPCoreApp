@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ErpCore.Database
+namespace ErpCore.Database.EF
 {
     public class ErpDbContext : IdentityDbContext<User>
     {
         public ErpDbContext() { }
-        public ErpDbContext(DbContextOptions<ErpDbContext> options) : base(options){ }
+        public ErpDbContext(DbContextOptions<ErpDbContext> options) : base(options) { }
 
         public virtual DbSet<Country> Countries => Set<Country>();
         public virtual DbSet<City> Cities => Set<City>();
