@@ -1,4 +1,5 @@
-﻿using ErpCore.Database.Entities;
+﻿using ErpCore.Database.EF;
+using ErpCore.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace ErpCore.Database.Seeders
 {
     public class AppSeeder
     {
-        public static async Task InitializeAsync(AppDatabase database, UserManager<User> user, RoleManager<IdentityRole> role)
+        public static async Task InitializeAsync(ErpDbContext database, UserManager<User> user, RoleManager<IdentityRole> role)
         {
             database.Database.EnsureCreated();
             if(!role.Roles.Any()) 

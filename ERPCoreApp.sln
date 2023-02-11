@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErpCore.WebApp", "ErpCore.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErpCore.Admin", "ErpCore.Admin\ErpCore.Admin.csproj", "{5AA21D6E-357E-4D94-901F-32BEF65E3D88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErpCore.WebApi", "ErpCore.WebApi\ErpCore.WebApi.csproj", "{0CD5CE6F-4A2E-435C-8A85-379E6ACD1AC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErpCore.WebApi", "ErpCore.WebApi\ErpCore.WebApi.csproj", "{0CD5CE6F-4A2E-435C-8A85-379E6ACD1AC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

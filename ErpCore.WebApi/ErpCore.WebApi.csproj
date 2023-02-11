@@ -20,4 +20,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ErpCore.Business.Logic.Shared\ErpCore.Business.Logic.Shared.csproj" />
+    <ProjectReference Include="..\ErpCore.Business.Logic\ErpCore.Business.Logic.csproj" />
+    <ProjectReference Include="..\ErpCore.Common.Shared\ErpCore.Common.Shared.csproj" />
+    <ProjectReference Include="..\ErpCore.Database.Shared\ErpCore.Database.Shared.csproj" />
+    <ProjectReference Include="..\ErpCore.Database\ErpCore.Database.csproj" />
+    <ProjectReference Include="..\ErpCore.Ultils\ErpCore.Ultils.csproj" />
+  </ItemGroup>
+
 </Project>
