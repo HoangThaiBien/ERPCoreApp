@@ -11,7 +11,7 @@ namespace ErpCore.Database.Entities
     {
         public int Id { set; get; }
         public DateTime OrderDate { set; get; }
-        public Guid CustomerId { set; get; }
+        public int CustomerId { set; get; }
         public string? ShipName { set; get; }
         public string? ShipAddress { set; get; }
         public string? ShipEmail { set; get; }

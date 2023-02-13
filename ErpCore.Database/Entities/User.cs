@@ -9,7 +9,7 @@ namespace ErpCore.Database.Entities
 {
     public class User:IdentityUser
     {
-        public virtual ICollection<Employee>? Employes { get; set;}
-        public virtual ICollection<Customer>? Customers { get; set; }
+        public string? EmployeId { get; set;}
+        public string? CustomerID { get; set; }
     }
 }

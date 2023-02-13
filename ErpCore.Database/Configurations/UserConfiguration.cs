@@ -13,9 +13,7 @@ namespace ErpCore.Database.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(o => o.Id);
-            builder.Property(o => o.Id).UseIdentityColumn();
-
+            builder.HasKey(x => x.Id);
         }
     }
 }
