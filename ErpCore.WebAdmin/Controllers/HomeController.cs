@@ -20,7 +20,7 @@ namespace ErpCore.WebAdmin.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            return View("Pages-404");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
