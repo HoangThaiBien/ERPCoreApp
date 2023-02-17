@@ -1,8 +1,8 @@
-﻿using ErpCore.Admin.Models;
+﻿using ErpCore.WebAdmin.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace ErpCore.Admin.Controllers
+namespace ErpCore.WebAdmin.Controllers
 {
     public class HomeController : Controller
     {

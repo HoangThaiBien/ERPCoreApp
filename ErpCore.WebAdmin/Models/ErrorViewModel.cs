@@ -1,4 +1,4 @@
-namespace ErpCore.Admin.Models
+namespace ErpCore.WebAdmin.Models
 {
     public class ErrorViewModel
     {
