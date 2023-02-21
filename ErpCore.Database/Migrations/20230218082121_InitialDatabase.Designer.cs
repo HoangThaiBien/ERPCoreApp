@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ErpCore.Database.Migrations
 {
     [DbContext(typeof(ErpDbContext))]
-    [Migration("20230211154238_InitialDatabase")]
+    [Migration("20230218082121_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,31 @@ namespace ErpCore.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ErpCore.Database.Entities.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.ToTable("Account");
+                });
 
             modelBuilder.Entity("ErpCore.Database.Entities.Cart", b =>
                 {
@@ -188,6 +213,9 @@ namespace ErpCore.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
@@ -196,9 +224,6 @@ namespace ErpCore.Database.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -780,9 +805,6 @@ namespace ErpCore.Database.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomerID")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -970,6 +992,17 @@ namespace ErpCore.Database.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ErpCore.Database.Entities.Account", b =>
+                {
+                    b.HasOne("ErpCore.Database.Entities.Customer", "Customer")
+                        .WithOne("Account")
+                        .HasForeignKey("ErpCore.Database.Entities.Account", "CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("ErpCore.Database.Entities.Cart", b =>
@@ -1204,6 +1237,8 @@ namespace ErpCore.Database.Migrations
 
             modelBuilder.Entity("ErpCore.Database.Entities.Customer", b =>
                 {
+                    b.Navigation("Account");
+
                     b.Navigation("Carts");
 
                     b.Navigation("OrderDetails");

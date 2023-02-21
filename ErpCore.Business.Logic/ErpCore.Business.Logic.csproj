@@ -11,8 +11,10 @@
     <Folder Include="Commands\Handler\" />
     <Folder Include="Events\Data\" />
     <Folder Include="Events\Handler\" />
-    <Folder Include="Queries\Interface\" />
-    <Folder Include="Queries\Implement\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
   </ItemGroup>
 
 </Project>

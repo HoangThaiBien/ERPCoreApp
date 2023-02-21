@@ -34,5 +34,7 @@ namespace ErpCore.Database.Entities
         public virtual ICollection<ProductCategory>? ProductCategories { get; set; }
         public virtual ICollection<Cart>? Carts { get; set; }
         public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
+        public int SupplierId { get; set; }
+        public virtual Supplier? Supplier { get; set; }
     }
 }

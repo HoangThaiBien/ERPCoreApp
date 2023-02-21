@@ -6,4 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ErpCore.Business.Logic.Shared\ErpCore.Business.Logic.Shared.csproj" />
+    <ProjectReference Include="..\ErpCore.Business.Logic\ErpCore.Business.Logic.csproj" />
+    <ProjectReference Include="..\ErpCore.Common.Shared\ErpCore.Common.Shared.csproj" />
+    <ProjectReference Include="..\ErpCore.Database.Shared\ErpCore.Database.Shared.csproj" />
+    <ProjectReference Include="..\ErpCore.Database\ErpCore.Database.csproj" />
+    <ProjectReference Include="..\ErpCore.Ultils\ErpCore.Ultils.csproj" />
+    <ProjectReference Include="..\ErpCore.WebApi\ErpCore.WebApi.csproj" />
+  </ItemGroup>
+
 </Project>
