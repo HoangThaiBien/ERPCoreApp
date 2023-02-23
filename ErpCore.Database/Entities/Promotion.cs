@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ErpCore.Database.Entities
 {
-    public class Promotion
+    public class Promotion :BaseEntity
     {
         public int Id { set; get; }
         public DateTime FromDate { set; get; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ErpCore.Database.Entities
 {
-   public class Category :BaseEntity
+   public class Category : BaseEntity
    {
        public int Id { set; get; }
        public int SortOrder { set; get; }

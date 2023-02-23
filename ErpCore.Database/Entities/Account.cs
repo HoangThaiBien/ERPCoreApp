@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ErpCore.Database.Entities
 {
-    public class Account
+    public class Account : BaseEntity
     {
         public int Id { get; set; }
         public string? Username { get; set; }
@@ -16,5 +16,6 @@ namespace ErpCore.Database.Entities
         // Khóa ngoại tham chiếu đến bảng Customer
         public int CustomerId { get; set; }
         public virtual Customer? Customer { get; set; }
+
     }
 }

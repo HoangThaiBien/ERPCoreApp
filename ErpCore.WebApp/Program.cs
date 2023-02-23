@@ -1,8 +1,10 @@
+using ErpCore.Business.Logic.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddAutoMapper(typeof(ErpCore.Business.Logic.Queries.Helpers.EmployeeMapping).Assembly);
+builder.Services.AddAutoMapper(typeof(EmployeeMapping).Assembly);
 
 var app = builder.Build();
 

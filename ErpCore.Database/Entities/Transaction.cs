@@ -19,7 +19,7 @@ namespace ErpCore.Database.Entities
         public TransactionStatus Status { set; get; }
         public string? Provider { set; get; }
         public int CustomerId { get; set; }
-        public Customer? Customer { get; set; }
+        public virtual Customer? Customer { get; set; }
 
     }
 }

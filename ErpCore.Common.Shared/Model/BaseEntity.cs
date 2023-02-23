@@ -13,14 +13,14 @@ namespace ErpCore.Common.Shared.Model
         public string? LastUpdateBy{ get; set;}
         public DateTime? LastUpdateAt { get; set; }
         public bool? IsDeleted { get; set; }
-        public BaseEntity SetCreateInfo(string user, DateTime date) 
+        public BaseEntity setCreateInfo(string user, DateTime date) 
         {
             this.CreatedBy = user;
             this.CreatedAt = date;
             return this;
         }
 
-        public BaseEntity SetUpdateInfo(string user, DateTime date)
+        public BaseEntity setUpdateInfo(string user, DateTime date)
         {
             this.LastUpdateAt= date;
             this.LastUpdateBy = user;

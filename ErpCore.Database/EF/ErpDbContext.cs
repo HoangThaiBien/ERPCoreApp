@@ -35,6 +35,10 @@ namespace ErpCore.Database.EF
             builder.ApplyConfiguration(new StateConfiguration());
             builder.ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new AccountConfiguration());
+            builder.ApplyConfiguration(new SupplierConfiguration());
+            builder.ApplyConfiguration(new TagConfiguration());
+            builder.ApplyConfiguration(new SlideConfiguration());
         }
         public virtual DbSet<Country> Countries => Set<Country>();
         public virtual DbSet<City> Cities => Set<City>();
@@ -51,5 +55,9 @@ namespace ErpCore.Database.EF
         public virtual DbSet<OrderDetail> OrderDetails => Set<OrderDetail>();
         public virtual DbSet<Transaction> Transactions => Set<Transaction>();
         public virtual DbSet<Promotion> Promotions => Set<Promotion>();
+        public virtual DbSet<Supplier> Suppliers => Set<Supplier>();
+        public virtual DbSet<Tag> Tags => Set<Tag>();
+        public virtual DbSet<Slide> Slides => Set<Slide>();
+        public virtual DbSet<Account> Accounts => Set<Account>();
     }
 }

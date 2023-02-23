@@ -1,3 +1,6 @@
+using ErpCore.Business.Logic.Helpers;
+using ErpCore.Business.Logic.Queries.Repositories.Implement;
+using ErpCore.Business.Logic.Queries.Repositories.Interface;
 using ErpCore.Database.EF;
 using ErpCore.Database.Entities;
 using ErpCore.Database.Seeders;
@@ -7,11 +10,14 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(ErpCore.Business.Logic.Queries.Helpers.EmployeeMapping).Assembly);
+
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IAccountRepository,AccountRepository>();
+builder.Services.AddAutoMapper(typeof(AccountMapping).Assembly);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("ErpCoreDb");
@@ -23,14 +29,14 @@ policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var database = scope.ServiceProvider.GetRequiredService<ErpDbContext>();
     await database.Database.MigrateAsync();
     await ErpSeeder.InitializeAsync(database, userManager, roleManager);
-}
+}*/
 
 if (app.Environment.IsDevelopment())
 {

@@ -18,7 +18,7 @@ namespace ErpCore.Database.Entities
         public string? ShipPhoneNumber { set; get; }
         public OrderStatus Status { set; get; }
         public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
-        public Customer? Customer { get; set; }
+        public virtual Customer? Customer { get; set; }
 
 
     }

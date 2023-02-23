@@ -30,7 +30,6 @@ namespace ErpCore.Database.Entities
         public bool? Status { get; set; }
         public DateTime? TopHot { get; set; }
         public int? ViewCount { get; set; }
-        public int CategortyId { get; set; }
         public virtual ICollection<ProductCategory>? ProductCategories { get; set; }
         public virtual ICollection<Cart>? Carts { get; set; }
         public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
