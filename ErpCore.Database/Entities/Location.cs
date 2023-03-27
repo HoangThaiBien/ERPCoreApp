@@ -9,13 +9,15 @@ namespace ErpCore.Database.Entities
     public class Location : BaseEntity
     {
         public int Id { get; set; }
-        public int CountryId { get; set; }
-        public virtual Country? Country { get; set; }
-        public int StateId { get; set; }
-        public virtual State? State { get; set; }
-        public int CityId { get; set; }
-        public virtual City? City { get; set; }
-        public virtual ICollection<Employee>? Employes { get; set; }
-        public virtual ICollection<Customer>? Customers { get; set; }
+        public int ProvinceId { get; set; }
+        public virtual Province? Province { get; set; }
+        public int DistrictId { get; set; }
+        public virtual District? District { get; set; }
+        public int WardId { get; set; }
+        public virtual Ward? Ward { get; set; }
+        public int EmployeeId { get; set; }
+        public virtual Employee? Employee { get; set; }
+        public int CustomerId { get; set; }
+        public virtual Customer? Customer { get; set; }
     }
 }

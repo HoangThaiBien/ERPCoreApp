@@ -21,8 +21,9 @@ namespace ErpCore.Database.EF
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new CartConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new CityConfiguration());
-            builder.ApplyConfiguration(new CountryConfiguration());
+            builder.ApplyConfiguration(new WardConfiguration());
+            builder.ApplyConfiguration(new DistrictConfiguration());
+            builder.ApplyConfiguration(new ProvinceConfiguration());
             builder.ApplyConfiguration(new CustomerConfiguration());
             builder.ApplyConfiguration(new EmployeeConfiguration());
             builder.ApplyConfiguration(new LocationConfiguration());
@@ -32,17 +33,18 @@ namespace ErpCore.Database.EF
             builder.ApplyConfiguration(new ProductCategoryConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new PromotionConfiguration());
-            builder.ApplyConfiguration(new StateConfiguration());
             builder.ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new AccountConfiguration());
             builder.ApplyConfiguration(new SupplierConfiguration());
             builder.ApplyConfiguration(new TagConfiguration());
-            builder.ApplyConfiguration(new SlideConfiguration());
+            builder.ApplyConfiguration(new InventoryInConfiguration());
+            builder.ApplyConfiguration(new InventoryOutConfiguration());
+            builder.ApplyConfiguration(new WareHouseConfiguration());
+            builder.ApplyConfiguration(new UserRefreshTokenConfiguration());
         }
-        public virtual DbSet<Country> Countries => Set<Country>();
-        public virtual DbSet<City> Cities => Set<City>();
-        public virtual DbSet<State> States => Set<State>();
+        public virtual DbSet<Ward> Wards => Set<Ward>();
+        public virtual DbSet<District> Districts => Set<District>();
+        public virtual DbSet<Province> Provinces => Set<Province>();
         public virtual DbSet<Location> Locations => Set<Location>();
         public virtual DbSet<Category> Categories => Set<Category>();
         public virtual DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
@@ -57,7 +59,9 @@ namespace ErpCore.Database.EF
         public virtual DbSet<Promotion> Promotions => Set<Promotion>();
         public virtual DbSet<Supplier> Suppliers => Set<Supplier>();
         public virtual DbSet<Tag> Tags => Set<Tag>();
-        public virtual DbSet<Slide> Slides => Set<Slide>();
-        public virtual DbSet<Account> Accounts => Set<Account>();
+        public virtual DbSet<InventoryIn> InventoryIns=> Set<InventoryIn>();
+        public virtual DbSet<InventoryOut> InventoryOuts => Set<InventoryOut>();
+        public virtual DbSet<WareHouse> WareHouses => Set<WareHouse>();
+        public virtual DbSet<UserRefreshToken> UserRefreshTokens => Set<UserRefreshToken>(); 
     }
 }

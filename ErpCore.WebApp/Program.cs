@@ -1,14 +1,24 @@
-using ErpCore.Business.Logic.Helpers;
+﻿using ErpCore.Business.Logic.Repositories;
+using ErpCore.WebApp.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddAutoMapper(typeof(EmployeeMapping).Assembly);
+builder.Services.AddRazorPages();
+builder.Services.AddHttpClient();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.LoginPath = "/User/Login/";
+    options.AccessDeniedPath = "/User/Forbidden/";
+});
 
-var app = builder.Build();
+builder.Services.AddScoped<IUserApiClient, UserApiClient>();
+builder.Services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
 
 // Configure the HTTP request pipeline.
+var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -18,9 +28,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -28,4 +38,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-

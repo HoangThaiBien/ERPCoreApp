@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using ErpCore.Business.Logic.Dtos;
+using ErpCore.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace ErpCore.Business.Logic.Helpers
     {
         public CustomerMapping()
         {
-            /*CreateMap<Category, CategoryDetailModel>().ReverseMap();*/
+            CreateMap<CustomerModel, Customer>().ReverseMap();
         }
 
     }

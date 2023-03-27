@@ -35,5 +35,7 @@ namespace ErpCore.Database.Entities
         public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
         public int SupplierId { get; set; }
         public virtual Supplier? Supplier { get; set; }
+        public virtual ICollection<InventoryIn>? InventoryIns { get; set; }
+        public virtual ICollection<InventoryOut>? InventoryOuts { get; set; }
     }
 }

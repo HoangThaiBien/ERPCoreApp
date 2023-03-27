@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using ErpCore.Business.Logic.Dtos;
+using ErpCore.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,8 @@ namespace ErpCore.Business.Logic.Helpers
 {
     public class ProductMaping : Profile
     {
-        public ProductMaping() { }
+        public ProductMaping() {
+            CreateMap<ProductModel, Product>().ReverseMap();
+        }
     }
 }
