@@ -27,7 +27,7 @@ namespace ErpCore.Business.Logic.Repositories
             _entities = _context.Set<TEntity>();
         }
 
-        public async Task AddItem(TDto entity)
+        public async Task Add(TDto entity)
         {
             var newItem = _mapper.Map<TEntity>(entity);
             await _entities.AddAsync(newItem);
@@ -36,7 +36,7 @@ namespace ErpCore.Business.Logic.Repositories
 
         public async Task AddRange(IEnumerable<TDto> entities)
         {
-            var newListItem = _mapper.Map<TEntity>(entities);
+            var newListItem = _mapper.Map< IEnumerable<TEntity>>(entities);
             await _entities.AddRangeAsync(newListItem);
             await _context.SaveChangesAsync();
         }
@@ -48,23 +48,33 @@ namespace ErpCore.Business.Logic.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteRange(IEnumerable<int> id)
+        public async Task DeleteRange(IEnumerable<int> ids)
         {
-            var entity = await _entities.FindAsync(id);
-            _entities.RemoveRange(entity!);
+            foreach(var id in ids)
+            {
+                var entity = await _entities.FindAsync(id);
+                _entities.RemoveRange(entity!);
+            }    
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TDto>> GetAll()
+        public async Task<IEnumerable<TDto>> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            var ListItem = await _entities.ToListAsync();
-            return _mapper.Map<IEnumerable<TDto>>(ListItem);
+            IQueryable<TEntity> query = _entities;
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            var entities = await query.ToListAsync();
+            return _mapper.Map<IEnumerable<TDto>>(entities);
         }
 
         public async Task<TDto> GetById(int id)
         {
-            var ListItem = await _entities.FindAsync(id);
-            return _mapper.Map<TDto>(ListItem);
+            var entity = await _entities.FindAsync(id);
+            return _mapper.Map<TDto>(entity);
         }
 
         public async Task<IEnumerable<TDto>> FindItem(Expression<Func<TEntity, bool>> predicate)

@@ -1,5 +1,6 @@
 ﻿using ErpCore.Business.Logic.Repositories;
 using ErpCore.Common.Shared.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace ErpCore.Business.Logic.Dtos
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Image { get; set; }
         public string? Description { get; set; }
         public string? Address { get; set; }
         public string? PostalCode { get; set; }
@@ -22,9 +22,5 @@ namespace ErpCore.Business.Logic.Dtos
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
         public LocationModel? Location { get; set; }
-        public virtual ICollection<TransactionModel>? Transactions { get; set; }
-        public virtual ICollection<OrderModel>? Orders { get; set; }
-        public virtual ICollection<OrderDetailModel>? OrderDetails { get; set; }
-        public virtual ICollection<CartModel>? Carts { get; set; }
     }
 }

@@ -16,12 +16,9 @@ namespace ErpCore.WebApp.Controllers
     public class UserController : Controller
     {
         private readonly IUserApiClient _userApiClient;
-        private readonly ILogger<UserController> _logger;
         public UserController(IUserApiClient userApiClient, ILogger<UserController> logger) 
         { 
-
-            _userApiClient = userApiClient;
-            _logger = logger;
+            _userApiClient = userApiClient; 
         }
         public IActionResult Index()
         {
@@ -31,14 +28,14 @@ namespace ErpCore.WebApp.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            
             return View();
         }
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model) 
         {
-            if(!ModelState.IsValid)
+
+            if (!ModelState.IsValid)
                return View(ModelState);
 
             var tokenModel = await _userApiClient.Authenticate(model);
@@ -47,7 +44,7 @@ namespace ErpCore.WebApp.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, model.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, tokenModel.accessToken!)
+                    new Claim(JwtRegisteredClaimNames.Jti, tokenModel.accessToken!),
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -58,8 +55,21 @@ namespace ErpCore.WebApp.Controllers
                     IsPersistent = true,
                     
                 };
+
+                var cookieOptions = new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                    IsEssential = true, // đảm bảo rằng cookie sẽ được gửi đi ngay cả khi người dùng không xác thực
+                    HttpOnly = true, // chỉ cho phép truy cập qua HTTP, không cho phép JavaScript truy cập cookie này
+                    SameSite = SameSiteMode.Strict // chỉ cho phép gửi cookie khi đang ở cùng một trang web (same-site)
+                };
+
+                Response.Cookies.Append("access_token", tokenModel.accessToken!, cookieOptions);
+                Response.Cookies.Append("refresh_token", tokenModel.refreshToken!, cookieOptions);
+                /* HttpContext.Session.SetString("access_tonken", tokenModel.accessToken!);
+                HttpContext.Session.SetString("refresh_token", tokenModel.refreshToken!);*/
+
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
-                _logger.LogInformation("Login successful.");
                 return RedirectToAction("Index", "Home");
             }
 
@@ -75,9 +85,18 @@ namespace ErpCore.WebApp.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Register(RegisterModel model)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+                return View(ModelState);
+            var result = await _userApiClient.RegisterUser(model);
+            if (result != false)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            ModelState.AddModelError(string.Empty, "Fail Register");
+            return View(model);
         }
 
         [AllowAnonymous]

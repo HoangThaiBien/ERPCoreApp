@@ -17,16 +17,7 @@ namespace ErpCore.Database.Entities
         public string? Code { get; set; } 
         public string? MetaTitle { get; set; } 
         public string? Description { get; set; } 
-        public string? Image { get; set; } 
-        public string? MoreImage { get; set; }
-        public decimal? Price { get; set; }
-        public decimal? PromotionPrice { get; set; }
-        public bool? IncludeVAT { get; set; }
-        public int? Quantity { get; set; }
-        public string? Detail { get; set; } 
-        public int? Warranty { get; set; }
-        public string? MetaKeywords { get; set; } 
-        public string? MetaDescription { get; set; } 
+
         public bool? Status { get; set; }
         public DateTime? TopHot { get; set; }
         public int? ViewCount { get; set; }
@@ -37,5 +28,6 @@ namespace ErpCore.Database.Entities
         public virtual Supplier? Supplier { get; set; }
         public virtual ICollection<InventoryIn>? InventoryIns { get; set; }
         public virtual ICollection<InventoryOut>? InventoryOuts { get; set; }
+        public virtual ICollection<ImageProduct>? ImageProducts { get; set; }
     }
 }

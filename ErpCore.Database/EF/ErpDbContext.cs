@@ -41,6 +41,7 @@ namespace ErpCore.Database.EF
             builder.ApplyConfiguration(new InventoryOutConfiguration());
             builder.ApplyConfiguration(new WareHouseConfiguration());
             builder.ApplyConfiguration(new UserRefreshTokenConfiguration());
+            builder.ApplyConfiguration(new ImageConfiguration());
         }
         public virtual DbSet<Ward> Wards => Set<Ward>();
         public virtual DbSet<District> Districts => Set<District>();
@@ -62,6 +63,7 @@ namespace ErpCore.Database.EF
         public virtual DbSet<InventoryIn> InventoryIns=> Set<InventoryIn>();
         public virtual DbSet<InventoryOut> InventoryOuts => Set<InventoryOut>();
         public virtual DbSet<WareHouse> WareHouses => Set<WareHouse>();
-        public virtual DbSet<UserRefreshToken> UserRefreshTokens => Set<UserRefreshToken>(); 
+        public virtual DbSet<UserRefreshToken> UserRefreshTokens => Set<UserRefreshToken>();
+        public virtual DbSet<ImageProduct> ImageProducts => Set<ImageProduct>();
     }
 }

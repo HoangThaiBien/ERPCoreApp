@@ -1,5 +1,6 @@
 ﻿using ErpCore.Business.Logic.Repositories;
 using ErpCore.Common.Shared.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ErpCore.Business.Logic.Dtos
         public string? Code { get; set; }
         public string? MetaTitle { get; set; }
         public string? Description { get; set; }
-        public string? Image { get; set; }
+        public IFormFile Image { get; set; }
         public string? MoreImage { get; set; }
         public decimal? Price { get; set; }
         public decimal? PromotionPrice { get; set; }
@@ -29,11 +30,6 @@ namespace ErpCore.Business.Logic.Dtos
         public bool? Status { get; set; }
         public DateTime? TopHot { get; set; }
         public int? ViewCount { get; set; }
-
-        public virtual ICollection<ProductCategoryModel>? ProductCategories { get; set; }
-        public virtual ICollection<CartModel>? Carts { get; set; }
-        public virtual ICollection<OrderDetailModel>? OrderDetails { get; set; }
         public int SupplierId { get; set; }
-        public virtual SupplierModel? Supplier { get; set; }
     }
 }

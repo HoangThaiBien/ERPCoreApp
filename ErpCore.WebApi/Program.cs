@@ -1,9 +1,7 @@
 ﻿using ErpCore.Business.Logic.Dtos;
-using ErpCore.Business.Logic.Helpers;
+using ErpCore.Business.Logic.ProfileMapping;
 using ErpCore.Business.Logic.Repositories.Implement;
 using ErpCore.Business.Logic.Repositories.Interface;
-using ErpCore.Business.Logic.Repositories;
-using ErpCore.Business.Logic.Services;
 using ErpCore.Database.EF;
 using ErpCore.Database.Entities;
 using ErpCore.Database.Seeders;
@@ -23,15 +21,16 @@ var connectionString = builder.Configuration.GetConnectionString("ErpCoreDb");
 builder.Services.AddDbContext<ErpDbContext>(options => options.UseSqlServer(connectionString));
 
 //DI 
-/*builder.Services.AddScoped<IAccountRepository,AccountRepository>();
-builder.Services.AddScoped<ITagRepository, TagRepository>();*/
-builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
-builder.Services.AddScoped<IRepository<Tag, TagModel>, Repository<Tag, TagModel>>();
-builder.Services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
-//Auto Map
-builder.Services.AddAutoMapper(typeof(ProductModel).Assembly);
+/*builder.Services.AddScoped<IRepository<Tag, TagModel>, Repository<Tag, TagModel>>();*/
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
+builder.Services.AddScoped<IJWTManagerRepository,JWTManagerRepository>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IImageRepository,ImageRepository>();
 
+//Auto Map
+builder.Services.AddAutoMapper(typeof(TagMapping).Assembly);
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -144,13 +143,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.UseHttpsRedirection();
-
 app.UseCors();
-
-app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllers();
-
 app.Run();

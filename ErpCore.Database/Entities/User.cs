@@ -9,10 +9,6 @@ namespace ErpCore.Database.Entities
 {
     public class User:IdentityUser
     {
-        public int? EmployeId { get; set;}
-        public int? CustomerId { get; set; }
-        public Employee? Employee { get; set; }
-        public Customer? Customer { get; set; }
-
+        public string? AuthorId { get; set;}
     }
 }

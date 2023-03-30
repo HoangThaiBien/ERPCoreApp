@@ -9,6 +9,9 @@ namespace ErpCore.Business.Logic.Dtos
 {
     public class RegisterModel
     {
+       /* [RegularExpression(@"^\d{10}$")]
+        [Required]
+        public string? PhoneNumber { get; set; } = null;*/
         [EmailAddress]
         [Required]
         public string? Email { get; set; } = null;

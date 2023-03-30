@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ErpCore.Business.Logic.Helpers
+namespace ErpCore.Business.Logic.ProfileMapping
 {
-    public class ProductMaping : Profile
+    public class ProductMapping : Profile
     {
-        public ProductMaping() {
+        public ProductMapping() {
             CreateMap<ProductModel, Product>().ReverseMap();
         }
     }

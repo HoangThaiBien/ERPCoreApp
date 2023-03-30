@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace ErpCore.Business.Logic.Repositories.Implement
 {
-    public class TagRepository : ITagRepository
+
+    /*public partial class TagRepository : ITagRepository
     {
         private readonly ErpDbContext _context;
         private readonly IMapper _mapper;
@@ -21,7 +22,7 @@ namespace ErpCore.Business.Logic.Repositories.Implement
             _context = context;
             _mapper = mapper;
         }
-        public async Task<int> AddById(TagModel model)
+        public async Task<int> AddItem(TagModel model)
         {
             var newTag = _mapper.Map<Tag>(model);
             _context.Tags.Add(newTag);
@@ -63,6 +64,16 @@ namespace ErpCore.Business.Logic.Repositories.Implement
                 _context.Tags.Update(UpdateTag);
                 await _context.SaveChangesAsync();
             }
+        }
+    }*/
+    public partial class TagRepository : Repository<Tag,TagModel>, ITagRepository
+    {
+        private readonly ErpDbContext _context;
+        private readonly IMapper _mapper;
+        public TagRepository(ErpDbContext context, IMapper mapper) : base(context, mapper)
+        {
+            _context = context;
+            _mapper = mapper;
         }
     }
 }

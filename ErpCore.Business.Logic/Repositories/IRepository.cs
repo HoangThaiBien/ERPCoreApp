@@ -12,9 +12,9 @@ namespace ErpCore.Business.Logic.Repositories
         where TDto : class
     {
         Task<TDto> GetById(int id);
-        Task<IEnumerable<TDto>> GetAll();
+        Task<IEnumerable<TDto>> GetAll(params Expression<Func<TEntity, object>>[] includeProperties);
         Task<IEnumerable<TDto>> FindItem(Expression<Func<TEntity, bool>> predicate);
-        Task AddItem(TDto entity);
+        Task Add(TDto entity);
         Task AddRange(IEnumerable<TDto> entities);
         Task Update(TDto entity);
         Task Delete(int id);

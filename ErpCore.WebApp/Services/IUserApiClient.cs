@@ -5,5 +5,6 @@ namespace ErpCore.WebApp.Services
     public interface IUserApiClient
     {
         Task<TokenModel> Authenticate(LoginModel model);
+        Task<bool> RegisterUser(RegisterModel model);
     }
 }

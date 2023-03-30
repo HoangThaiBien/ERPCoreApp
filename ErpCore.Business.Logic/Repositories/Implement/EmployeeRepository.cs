@@ -1,43 +1,25 @@
-﻿using ErpCore.Business.Logic.Dtos;
+﻿using AutoMapper;
+using ErpCore.Business.Logic.Dtos;
 using ErpCore.Business.Logic.Repositories.Interface;
+using ErpCore.Database.EF;
+using ErpCore.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ErpCore.Business.Logic.Repositories.Implement
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public partial class EmployeeRepository : Repository<Employee,EmployeeModel>, IEmployeeRepository
     {
-        public Task<int> Add(EmployeeModel model)
+        private readonly ErpDbContext _context;
+        private readonly IMapper _mapper;
+        public EmployeeRepository(ErpDbContext context, IMapper mapper) : base(context, mapper)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<EmployeeModel>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<EmployeeModel> GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<EmployeeModel>> GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Update(int id, EmployeeModel model)
-        {
-            throw new NotImplementedException();
+            _context = context;
+            _mapper = mapper;
         }
     }
 }

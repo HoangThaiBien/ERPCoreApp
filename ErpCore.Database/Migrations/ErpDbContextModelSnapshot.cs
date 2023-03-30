@@ -119,6 +119,12 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -132,9 +138,6 @@ namespace ErpCore.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsDeleted")
@@ -190,6 +193,12 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -203,9 +212,6 @@ namespace ErpCore.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsDeleted")
@@ -229,6 +235,44 @@ namespace ErpCore.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employes", (string)null);
+                });
+
+            modelBuilder.Entity("ErpCore.Database.Entities.ImageProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ImageProducts", (string)null);
                 });
 
             modelBuilder.Entity("ErpCore.Database.Entities.InventoryIn", b =>
@@ -577,15 +621,6 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Detail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IncludeVAT")
-                        .HasColumnType("bit");
-
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -595,31 +630,13 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("LastUpdateBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MetaDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MetaKeywords")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("MetaTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MoreImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("PromotionPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<bool?>("Status")
@@ -632,9 +649,6 @@ namespace ErpCore.Database.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ViewCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Warranty")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -898,12 +912,12 @@ namespace ErpCore.Database.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -911,12 +925,6 @@ namespace ErpCore.Database.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("EmployeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -952,10 +960,6 @@ namespace ErpCore.Database.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -1229,6 +1233,17 @@ namespace ErpCore.Database.Migrations
                     b.Navigation("Province");
                 });
 
+            modelBuilder.Entity("ErpCore.Database.Entities.ImageProduct", b =>
+                {
+                    b.HasOne("ErpCore.Database.Entities.Product", "Product")
+                        .WithMany("ImageProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("ErpCore.Database.Entities.InventoryIn", b =>
                 {
                     b.HasOne("ErpCore.Database.Entities.Product", "Product")
@@ -1388,21 +1403,6 @@ namespace ErpCore.Database.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("ErpCore.Database.Entities.User", b =>
-                {
-                    b.HasOne("ErpCore.Database.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("ErpCore.Database.Entities.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("ErpCore.Database.Entities.UserRefreshToken", b =>
                 {
                     b.HasOne("ErpCore.Database.Entities.User", "User")
@@ -1516,6 +1516,8 @@ namespace ErpCore.Database.Migrations
             modelBuilder.Entity("ErpCore.Database.Entities.Product", b =>
                 {
                     b.Navigation("Carts");
+
+                    b.Navigation("ImageProducts");
 
                     b.Navigation("InventoryIns");
 

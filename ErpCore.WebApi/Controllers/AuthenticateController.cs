@@ -1,5 +1,5 @@
 ﻿using ErpCore.Business.Logic.Dtos;
-using ErpCore.Business.Logic.Repositories;
+using ErpCore.Business.Logic.Repositories.Interface;
 using ErpCore.Common.Shared.Model;
 using ErpCore.Database.EF;
 using ErpCore.Database.Entities;
@@ -274,7 +274,6 @@ namespace ErpCore.WebApi.Controllers
             TimeSpan span = TimeSpan.FromSeconds(1);
             return dateTimeInterval;
         }
-
 
         [Authorize]
         [HttpPost]

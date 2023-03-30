@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ErpCore.Business.Logic.Repositories.Interface;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -10,7 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ErpCore.Business.Logic.Repositories
+namespace ErpCore.Business.Logic.Repositories.Implement
 {
     public class JWTManagerRepository : IJWTManagerRepository
     {
@@ -25,13 +26,10 @@ namespace ErpCore.Business.Logic.Repositories
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
-
                 ValidateAudience = false,
                 ValidateIssuer = false,
-
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Key"])),
-
                 ClockSkew = TimeSpan.Zero,
                 ValidateLifetime = false
             };
@@ -44,6 +42,19 @@ namespace ErpCore.Business.Logic.Repositories
 
         }
 
+        /*  public ClaimsPrincipal ValidateToken(string token)
+        {
+            IdentityModelEventSource.ShowPII = true;
+            SecurityToken validatedToken;
+            TokenValidationParameters validationParameters = new TokenValidationParameters();
+            validationParameters.ValidateLifetime = true;
+            validationParameters.ValidAudience = configuration["Jwt:Audience"];
+            validationParameters.ValidIssuer = configuration["Jwt:Issuer"];
+            validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out validatedToken);
+
+            return principal;
+        }*/
         /* public string GenerateToken(List<Claim> authClaims)
          {
              var autheKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
