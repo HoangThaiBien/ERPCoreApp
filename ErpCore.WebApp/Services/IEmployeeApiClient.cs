@@ -6,5 +6,7 @@ namespace ErpCore.WebApp.Services
     {
         Task<List<EmployeeModel>> GetListEmployee();
         Task<EmployeeModel> GetEmployeeById(int id);
+        Task<bool> CreateEmployee(EmployeeModel model);
+        Task<bool> DeleteEmployee(int id);
     }
 }

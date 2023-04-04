@@ -4,18 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Admin Dashboard</title>
-    <link rel="shortcut icon" href="~/assets/img/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/assets/plugins/feather/feather.css">
-    <link rel="stylesheet" href="~/assets/plugins/icons/flags/flags.css">
-    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="~/assets/css/style.css">
-    <link rel="shortcut icon" href="assets/img/favicon.png" />
-    <link rel="stylesheet" href="~/assets/plugins/datatables/datatables.min.css"/>
-
+    <link rel="shortcut icon" href="~/assets/img/favicon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap" rel="stylesheet" />
+    @RenderSection("Links",required:false)
+    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
+    @RenderSection("ScriptNotify",required:false)
+    <script>
+        $(document).ready(function () {
+            $('li.submenu ').click(function (e) {
+                $('li.submenu').removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -26,7 +27,7 @@
 
             <div class="header-left">
                 <a href="index.html" class="logo">
-                    <img src="assets/img/logo.png" alt="Logo">
+                    <img src="~/assets/img/logo.png" alt="Logo">
                 </a>
                 <a href="index.html" class="logo logo-small">
                     <img src="~/assets/img/logo-small.png" alt="Logo" width="30" height="30">
@@ -40,7 +41,7 @@
 
             <div class="top-nav-search">
                 <form>
-                    <input type="text" class="form-control" placeholder="Search here">
+                    <input type="text" class="form-control" placeholder="Nhập để tìm kiếm">
                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                 </form>
             </div>
@@ -51,17 +52,18 @@
             <ul class="nav user-menu">
                 <li class="nav-item dropdown noti-dropdown language-drop me-2">
                     <a href="#" class="dropdown-toggle nav-link header-nav-list" data-bs-toggle="dropdown">
-                        <img src="~/assets/img/icons/header-icon-01.svg" alt="">
+                        <img src="~/assets/img/icons/flag-vn-icon.png" alt="">
                     </a>
                     <div class="dropdown-menu ">
                         <div class="noti-content">
                             <div>
                                 <a class="dropdown-item" href="javascript:;">
-                                    <i class="flag flag-lr me-2"></i>ENGLISH
+                                    <i class="flag flag-vn me-2"></i>VIETNAMESE
                                 </a>
                                 <a class="dropdown-item" href="javascript:;">
-                                    <i class="flag flag-bl me-2"></i>VIETNAMESE
+                                    <i class="flag flag-lr me-2"></i>ENGLISH
                                 </a>
+                               
                             </div>
                         </div>
                     </div>
@@ -181,22 +183,12 @@
                 <li class="nav-item dropdown has-arrow new-user-menus">
                     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                         <span class="user-img">
-                            <img class="rounded-circle" src="assets/img/profiles/avatar-01.jpg" width="31"
-                                 alt="Soeng Souy">
-                            <span class="user-text">Soeng Souy</span>
+                            <img class="rounded-circle" src="~/assets/img/profiles/avatar-01.jpg" width="31"
+                                 alt="Soeng Souy"> <span class="user-text">@User.Identity!.Name</span>
+
                         </span>
                     </a>
                     <div class="dropdown-menu">
-                        <div class="user-header">
-                            <div class="avatar avatar-sm">
-                                <img src="~/assets/img/profiles/avatar-01.jpg" alt="User Image"
-                                     class="avatar-img rounded-circle">
-                            </div>
-                            <div class="user-text">
-                                <h6>Soeng Souy</h6>
-                                <p class="text-muted mb-0">Administrator</p>
-                            </div>
-                        </div>
                         <form>
                             <button type="submit" class="btn dropdown-item">Thông tin tài khoản</button>
                         </form>
@@ -210,26 +202,19 @@
 
         </div>
 
-
         <div class="sidebar" id="sidebar">
             <partial name="~/Views/Shared/_Navigation.cshtml" />
         </div>
 
         <div class="page-wrapper">
-            <div class ="content container-fluid">
+            <div class="content container-fluid">
                 @RenderBody()
             </div>
         </div>
     </div>
 
-    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
-    <script src="~/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/js/feather.min.js"></script>
-    <script src="~/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="~/assets/plugins/apexchart/apexcharts.min.js"></script>
-    <script src="~/assets/plugins/apexchart/chart-data.js"></script>
-    <script src="~/assets/js/script.js"></script>
-    <script src="~/assets/plugins/datatables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>

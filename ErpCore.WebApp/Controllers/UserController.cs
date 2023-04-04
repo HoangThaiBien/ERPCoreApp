@@ -1,10 +1,12 @@
 ﻿using ErpCore.Business.Logic.Dtos;
 using ErpCore.Business.Logic.Repositories;
+using ErpCore.WebApp.Controllers;
 using ErpCore.WebApp.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -36,10 +38,14 @@ namespace ErpCore.WebApp.Controllers
         {
 
             if (!ModelState.IsValid)
-               return View(ModelState);
+            {
+                ModelState.AddModelError("InvalidLogin", "Chưa nhập tài khoản hoặc mật khẩu");
+                return View(model);
+            }    
+                
 
             var tokenModel = await _userApiClient.Authenticate(model);
-            if (tokenModel != null)
+            if (tokenModel.refreshToken != null && tokenModel.accessToken != null)
             {
                 var claims = new List<Claim>
                 {
@@ -51,17 +57,16 @@ namespace ErpCore.WebApp.Controllers
                 var principal = new ClaimsPrincipal(identity);
                 var authProperties = new AuthenticationProperties
                 {
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60),
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(240),
                     IsPersistent = true,
-                    
                 };
 
                 var cookieOptions = new CookieOptions
                 {
-                    Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                    Expires = DateTimeOffset.UtcNow.AddMinutes(240),
                     IsEssential = true, // đảm bảo rằng cookie sẽ được gửi đi ngay cả khi người dùng không xác thực
-                    HttpOnly = true, // chỉ cho phép truy cập qua HTTP, không cho phép JavaScript truy cập cookie này
                     SameSite = SameSiteMode.Strict // chỉ cho phép gửi cookie khi đang ở cùng một trang web (same-site)
+                    /*HttpOnly = true khong cho phep truy cap bang javascript*/
                 };
 
                 Response.Cookies.Append("access_token", tokenModel.accessToken!, cookieOptions);
@@ -72,8 +77,7 @@ namespace ErpCore.WebApp.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
                 return RedirectToAction("Index", "Home");
             }
-
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError("InvalidLogin", "Tên đăng nhập hoặc mật khẩu không chính xác");
             return View(model);
         }
 

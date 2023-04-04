@@ -3,6 +3,7 @@ using ErpCore.Business.Logic.Dtos;
 using ErpCore.Business.Logic.Repositories.Interface;
 using ErpCore.Database.EF;
 using ErpCore.Database.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,16 @@ namespace ErpCore.Business.Logic.Repositories.Implement
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        public async Task<EmployeeModel> GetByIdWithRoleAndLocation(int id)
+        {
+            var entity = await _context.Set<Employee>()
+                                       .Include(e => e.EmployeeRole)
+                                       .Include(e => e.Location)
+                                       .FirstOrDefaultAsync(e => e.Id == id);
+
+            return _mapper.Map<EmployeeModel>(entity);
         }
     }
 }

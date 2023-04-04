@@ -11,5 +11,6 @@ namespace ErpCore.Business.Logic.Repositories.Interface
     {
         public string SaveImage(IFormFile imageFile);
         public bool DeleteImage(string imageFileName);
+        public string GetFullImageUrl(string imageUrl);
     }
 }

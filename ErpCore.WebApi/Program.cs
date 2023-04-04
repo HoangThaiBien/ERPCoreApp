@@ -7,6 +7,9 @@ using ErpCore.Database.Entities;
 using ErpCore.Database.Seeders;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -28,7 +31,6 @@ builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
 builder.Services.AddScoped<IJWTManagerRepository,JWTManagerRepository>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IImageRepository,ImageRepository>();
-
 //Auto Map
 builder.Services.AddAutoMapper(typeof(TagMapping).Assembly);
 //Swagger
@@ -141,6 +143,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(/*c => c.SwaggerEndpoint("/swagger/v1/swagger.jon", "dotnetClaimAuthorization v1")*/);
 }
 
+app.UseCors(options =>
+    options.WithOrigins("https://localhost:7293")
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();

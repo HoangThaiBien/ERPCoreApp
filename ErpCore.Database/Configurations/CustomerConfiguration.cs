@@ -16,7 +16,6 @@ namespace ErpCore.Database.Configurations
             builder.ToTable("Customers");
             builder.HasKey(o => o.Id);
             builder.Property(o => o.Id).UseIdentityColumn();
-            builder.HasOne(l => l.Location).WithOne(c => c.Customer).HasForeignKey<Location>(z => z.CustomerId);
         }
     }
 }

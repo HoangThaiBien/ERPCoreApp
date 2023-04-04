@@ -131,6 +131,9 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("date");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -139,6 +142,9 @@ namespace ErpCore.Database.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
@@ -152,6 +158,9 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("LastUpdateBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -159,6 +168,8 @@ namespace ErpCore.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
 
                     b.ToTable("Customers", (string)null);
                 });
@@ -190,6 +201,9 @@ namespace ErpCore.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AcademicLevel")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
@@ -205,14 +219,26 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Department")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("EmployeeRoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
@@ -226,15 +252,60 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("LastUpdateBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkExperience")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeeRoleId");
+
+                    b.HasIndex("LocationId");
+
                     b.ToTable("Employes", (string)null);
+                });
+
+            modelBuilder.Entity("ErpCore.Database.Entities.EmployeeRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastUpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastUpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmployeeRoles", (string)null);
                 });
 
             modelBuilder.Entity("ErpCore.Database.Entities.ImageProduct", b =>
@@ -401,13 +472,7 @@ namespace ErpCore.Database.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DistrictId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("IsDeleted")
@@ -427,13 +492,7 @@ namespace ErpCore.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
-
                     b.HasIndex("DistrictId");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
 
                     b.HasIndex("ProvinceId");
 
@@ -585,11 +644,11 @@ namespace ErpCore.Database.Migrations
                         .HasColumnType("int")
                         .HasDefaultValueSql("Month(getutcdate())");
 
+                    b.Property<int>("StatusInvoices")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("TransferAmount")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TypeCode")
                         .HasColumnType("nvarchar(max)");
@@ -1222,6 +1281,15 @@ namespace ErpCore.Database.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ErpCore.Database.Entities.Customer", b =>
+                {
+                    b.HasOne("ErpCore.Database.Entities.Location", "Location")
+                        .WithMany("Customers")
+                        .HasForeignKey("LocationId");
+
+                    b.Navigation("Location");
+                });
+
             modelBuilder.Entity("ErpCore.Database.Entities.District", b =>
                 {
                     b.HasOne("ErpCore.Database.Entities.Province", "Province")
@@ -1231,6 +1299,21 @@ namespace ErpCore.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Province");
+                });
+
+            modelBuilder.Entity("ErpCore.Database.Entities.Employee", b =>
+                {
+                    b.HasOne("ErpCore.Database.Entities.EmployeeRole", "EmployeeRole")
+                        .WithMany("Employees")
+                        .HasForeignKey("EmployeeRoleId");
+
+                    b.HasOne("ErpCore.Database.Entities.Location", "Location")
+                        .WithMany("Employees")
+                        .HasForeignKey("LocationId");
+
+                    b.Navigation("EmployeeRole");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("ErpCore.Database.Entities.ImageProduct", b =>
@@ -1276,21 +1359,9 @@ namespace ErpCore.Database.Migrations
 
             modelBuilder.Entity("ErpCore.Database.Entities.Location", b =>
                 {
-                    b.HasOne("ErpCore.Database.Entities.Customer", "Customer")
-                        .WithOne("Location")
-                        .HasForeignKey("ErpCore.Database.Entities.Location", "CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ErpCore.Database.Entities.District", "District")
                         .WithMany("Locations")
                         .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ErpCore.Database.Entities.Employee", "Employee")
-                        .WithOne("Location")
-                        .HasForeignKey("ErpCore.Database.Entities.Location", "EmployeeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1306,11 +1377,7 @@ namespace ErpCore.Database.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Customer");
-
                     b.Navigation("District");
-
-                    b.Navigation("Employee");
 
                     b.Navigation("Province");
 
@@ -1485,8 +1552,6 @@ namespace ErpCore.Database.Migrations
                 {
                     b.Navigation("Carts");
 
-                    b.Navigation("Location");
-
                     b.Navigation("OrderDetails");
 
                     b.Navigation("Orders");
@@ -1503,9 +1568,19 @@ namespace ErpCore.Database.Migrations
 
             modelBuilder.Entity("ErpCore.Database.Entities.Employee", b =>
                 {
-                    b.Navigation("Location");
-
                     b.Navigation("PayRolls");
+                });
+
+            modelBuilder.Entity("ErpCore.Database.Entities.EmployeeRole", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("ErpCore.Database.Entities.Location", b =>
+                {
+                    b.Navigation("Customers");
+
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("ErpCore.Database.Entities.Order", b =>

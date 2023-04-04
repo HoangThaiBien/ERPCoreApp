@@ -15,9 +15,7 @@ namespace ErpCore.Database.Entities
         public virtual District? District { get; set; }
         public int WardId { get; set; }
         public virtual Ward? Ward { get; set; }
-        public int EmployeeId { get; set; }
-        public virtual Employee? Employee { get; set; }
-        public int CustomerId { get; set; }
-        public virtual Customer? Customer { get; set; }
+        public virtual ICollection<Employee>? Employees { get; set; }
+        public virtual ICollection<Customer>? Customers { get; set; }
     }
 }

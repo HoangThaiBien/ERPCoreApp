@@ -18,6 +18,6 @@ namespace ErpCore.Business.Logic.Repositories.Interface
         public Task Update(int id, EmployeeModel model);
         public Task Delete(int id);
         public Task DeleteRange(IEnumerable<int> id);*/
-       
+        Task<EmployeeModel> GetByIdWithRoleAndLocation(int id);
     }
 }

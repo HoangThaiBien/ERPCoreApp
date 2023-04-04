@@ -1,6 +1,7 @@
 ﻿using ErpCore.Business.Logic.Repositories.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,11 @@ namespace ErpCore.Business.Logic.Repositories.Implement
 {
     public class FileService : IFileService
     {
-        private IWebHostEnvironment environment;
+        private readonly IWebHostEnvironment _environment;
+
         public FileService(IWebHostEnvironment env)
         {
-            this.environment = env;
+            _environment = env;
         }
 
         public string SaveImage(IFormFile imageFile)
@@ -25,7 +27,7 @@ namespace ErpCore.Business.Logic.Repositories.Implement
                 {
                     return "";
                 }
-                var path = Path.Combine(this.environment.WebRootPath, "images");
+                var path = Path.Combine(this._environment.WebRootPath, "images");
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -52,7 +54,7 @@ namespace ErpCore.Business.Logic.Repositories.Implement
         {
             try
             {
-                var wwwPath = this.environment.WebRootPath;
+                var wwwPath = this._environment.WebRootPath;
                 var path = Path.Combine(wwwPath, "Uploads\\", imageFileName);
                 if (System.IO.File.Exists(path))
                 {
@@ -66,6 +68,20 @@ namespace ErpCore.Business.Logic.Repositories.Implement
                 return false;
             }
         }
+
+        private string GetFilePath(string ProductCode)
+        {
+            return this._environment.WebRootPath + "\\Uploads\\Product\\" + ProductCode;
+        }
+       
+        public string GetFullImageUrl(string imageUrl)
+        {
+            if (string.IsNullOrEmpty(imageUrl))
+                return "";
+            string hostUrl = "https://localhost:7277/";
+            return string.Concat(hostUrl, imageUrl);
+        }
     }
+
 }
 

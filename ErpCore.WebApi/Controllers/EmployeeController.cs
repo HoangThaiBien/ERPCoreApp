@@ -29,7 +29,18 @@ namespace ErpCore.WebApi.Controllers
         {
             try
             {
-                return Ok(await _employeeRepository.GetAll());
+                var result =  await _employeeRepository.GetAll();
+                if (result != null)
+                {
+                    foreach (var item in result)
+                    {
+                        item.Avatar = _fileService.GetFullImageUrl(item.Avatar);
+                        item.CoverImage = _fileService.GetFullImageUrl(item.CoverImage);
+                    }
+                }
+
+                return Ok(result);
+               
             }
             catch (Exception ex)
             {
@@ -38,12 +49,12 @@ namespace ErpCore.WebApi.Controllers
         }
 
         /*[Authorize(Policy = "AdminOrManager")]*/
-        [HttpGet("{id:int}")]
+        [HttpGet("Details/{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                var tag = await _employeeRepository.GetById(id);
+                var tag = await _employeeRepository.GetByIdWithRoleAndLocation(id);
                 if (tag == null)
                 {
                     return NotFound();
@@ -88,7 +99,7 @@ namespace ErpCore.WebApi.Controllers
             }
         }
 
-        [HttpPost("Create")]
+        /*[HttpPost("Create")]
         public async Task<IActionResult> Add(EmployeeModel model) 
         {
             try
@@ -107,12 +118,12 @@ namespace ErpCore.WebApi.Controllers
             {
                 return BadRequest();
             }
-        }
+        }*/
 
         
         [HttpPost]
-        [Route("upload-image")]
-        public async Task<IActionResult> UploadImage([FromForm] EmployeeModel model)
+        [Route("Create")]
+        public async Task<IActionResult> CreateWithImage([FromForm] EmployeeModel model)
         {
             try
             {

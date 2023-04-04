@@ -28,11 +28,6 @@ namespace ErpCore.Database.Configurations
                    .WithMany(c => c.Locations)
                    .HasForeignKey(l => l.WardId).OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(l => l.Customer)
-                   .WithOne(c => c.Location).OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(l => l.Employee)
-                   .WithOne(c => c.Location).OnDelete(DeleteBehavior.Restrict); 
         }
     }
 }

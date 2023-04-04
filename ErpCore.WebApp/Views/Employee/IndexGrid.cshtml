@@ -1,0 +1,114 @@
+﻿@model IEnumerable<ErpCore.Business.Logic.Dtos.EmployeeModel>
+
+@{
+    ViewData["Title"] = "IndexGrid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Links{
+    <title>Nhân viên</title>
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/plugins/feather/feather.css" />
+    <link rel="stylesheet" href="~/assets/plugins/icons/flags/flags.css" />
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/assets/plugins/datatables/datatables.min.css" />
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+    }
+
+@section Scripts {
+    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
+
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/assets/js/feather.min.js"></script>
+
+    <script src="~/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="~/assets/plugins/datatables/datatables.min.js"></script>
+
+    <script src="~/assets/js/script.js"></script>
+    }
+
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-sub-header">
+                <h3 class="page-title">Nhân viên</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="students.html">Nhân viên</a>
+                    </li>
+                    <li class="breadcrumb-item active">Tất cả nhân viên</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table comman-shadow">
+                <div class="card-body pb-0">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Danh sách nhân viên</h3>
+                            </div>
+                            <div class="col-auto text-end float-end ms-auto download-grp">
+                                <a href="/Employee/Index"
+                                   class="btn btn-outline-gray me-2">
+                                    <i class="feather-list"></i>
+                                </a>
+                                <a href="/Employee/IndexGrid"
+                                   class="btn btn-outline-gray me-2 active">
+                                    <i class="feather-grid"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="student-pro-list">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="student-box flex-fill">
+                                                <div class="student-img">
+                                                    <a href="student-details.html">
+                                                        @if (string.IsNullOrEmpty(item.Avatar))
+                                                        {
+                                                            <img class="img-thumbnail"
+                                                                 src="~/images/default-avatar.jpg"
+                                                                 alt="Avatar" style="width: 136px; height: 136px;" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img class="img-thumbnail"
+                                                                 src="@(item.Avatar)"
+                                                                 alt="Avatar" style="width: 136px; height: 136px;" />
+                                                        }
+                                                    </a>
+                                                </div>
+                                                <div class="student-content pb-0">
+                                                    <h5>
+                                                        <a href="student-details.html">@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</a>
+                                                    </h5>
+                                                    <h6>@Html.DisplayFor(modelItem => item.Role)</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
