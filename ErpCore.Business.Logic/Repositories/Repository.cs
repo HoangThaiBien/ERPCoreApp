@@ -85,8 +85,8 @@ namespace ErpCore.Business.Logic.Repositories
         }
         public async Task Update(TDto entity)
         {
-            var UpdateTag = _mapper.Map<TEntity>(entity);
-            _entities.Update(UpdateTag);
+            var UpdateItem = _mapper.Map<TEntity>(entity);
+            _entities.Update(UpdateItem);
             await _context.SaveChangesAsync();
 
         }

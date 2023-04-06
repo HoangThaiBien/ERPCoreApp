@@ -106,15 +106,11 @@ namespace ErpCore.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id,TagModel model)
+        [HttpPut]
+        public async Task<IActionResult> Update(TagModel model)
         {
             try
             {
-                if(model.Id != id)
-                {
-                    return NotFound();
-                }
                 await _tagRepository.Update(model);
                 return Ok();
             }

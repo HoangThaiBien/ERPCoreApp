@@ -32,7 +32,6 @@ namespace ErpCore.Business.Logic.Dtos
         [Column(TypeName = "date")]
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
-        public EmployeeRole? EmployeeRole { get; set; }
         public string? CoverImage { get; set; }
         public string? Avatar { get; set; }
         public IFormFile? AvatarFilePath { get; set; }

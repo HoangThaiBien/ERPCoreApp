@@ -89,14 +89,55 @@ namespace ErpCore.WebApp.Services
             requestContent.Add(new StringContent(model.DateOfBirth?.ToString("yyyy-MM-dd") ?? string.Empty), "DateOfBirth");
             requestContent.Add(new StringContent(model.CreatedBy ?? string.Empty), "CreatedBy");
             requestContent.Add(new StringContent(model.CreatedAt?.ToString("yyyy-MM-dd") ?? string.Empty), "CreatedAt");
-            requestContent.Add(new StringContent(model.LastUpdateBy ?? string.Empty), "LastUpdateBy");
-            requestContent.Add(new StringContent(model.LastUpdateAt?.ToString("yyyy-MM-dd") ?? string.Empty), "LastUpdateAt");
-            requestContent.Add(new StringContent(model.EmployeeRole?.ToString() ?? string.Empty), "EmployeeRole");
 
             var response = await client.PostAsync("/api/Employee/Create", requestContent);
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> UpdateEmployee(EmployeeModel model)
+        {
+            var accessToken = _httpContextAccessor.HttpContext!.Request.Cookies["access_token"];
+            var refreshToken = _httpContextAccessor.HttpContext!.Request.Cookies["refresh_token"];
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri("https://localhost:7277");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var requestContent = new MultipartFormDataContent();
+
+            if (model.CoverImageFilePath != null)
+            {
+                using var ms = new MemoryStream();
+                await model.CoverImageFilePath.CopyToAsync(ms);
+                var coverImageContent = new ByteArrayContent(ms.ToArray());
+                requestContent.Add(coverImageContent, "CoverImageFilePath", model.CoverImageFilePath.FileName);
+            }
+
+            if (model.AvatarFilePath != null)
+            {
+                using var ms = new MemoryStream();
+                await model.AvatarFilePath.CopyToAsync(ms);
+                var avatarContent = new ByteArrayContent(ms.ToArray());
+                requestContent.Add(avatarContent, "AvatarFilePath", model.AvatarFilePath.FileName);
+            }
+
+            requestContent.Add(new StringContent(model.Id.ToString()), "Id");
+            requestContent.Add(new StringContent(model.FirstName ?? string.Empty), "FirstName");
+            requestContent.Add(new StringContent(model.LastName ?? string.Empty), "LastName");
+            requestContent.Add(new StringContent(model.Description ?? string.Empty), "Description");
+            requestContent.Add(new StringContent(model.Address ?? string.Empty), "Address");
+            requestContent.Add(new StringContent(model.PhoneNumber ?? string.Empty), "PhoneNumber");
+            requestContent.Add(new StringContent(model.Email ?? string.Empty), "Email");
+            requestContent.Add(new StringContent(model.AcademicLevel ?? string.Empty), "AcademicLevel");
+            requestContent.Add(new StringContent(model.WorkExperience ?? string.Empty), "WorkExperience");
+            requestContent.Add(new StringContent(model.Department.ToString()), "Department");
+            requestContent.Add(new StringContent(model.Role.ToString()), "Role");
+            requestContent.Add(new StringContent(model.Gender.ToString() ?? string.Empty), "Gender");
+            requestContent.Add(new StringContent(model.DateOfBirth?.ToString("yyyy-MM-dd") ?? string.Empty), "DateOfBirth");
+            requestContent.Add(new StringContent(model.LastUpdateBy ?? string.Empty), "LastUpdateBy");
+            requestContent.Add(new StringContent(model.LastUpdateAt?.ToString("yyyy-MM-dd") ?? string.Empty), "LastUpdateAt");
+            var response = await client.PutAsync("/api/Employee/Update", requestContent);
+            return response.IsSuccessStatusCode;
+        }
         public async Task<bool> DeleteEmployee(int id)
         {
             var accessToken = _httpContextAccessor.HttpContext!.Request.Cookies["access_token"];

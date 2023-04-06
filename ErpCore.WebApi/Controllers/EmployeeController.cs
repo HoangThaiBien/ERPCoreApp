@@ -2,6 +2,7 @@
 using ErpCore.Business.Logic.Repositories.Implement;
 using ErpCore.Business.Logic.Repositories.Interface;
 using ErpCore.Common.Shared.Model;
+using ErpCore.Database.Entities;
 using ErpCore.Database.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ namespace ErpCore.WebApi.Controllers
         {
             try
             {
-                var result =  await _employeeRepository.GetAll();
+                var result = await _employeeRepository.GetAll();
                 if (result != null)
                 {
                     foreach (var item in result)
@@ -40,7 +41,7 @@ namespace ErpCore.WebApi.Controllers
                 }
 
                 return Ok(result);
-               
+
             }
             catch (Exception ex)
             {
@@ -54,12 +55,14 @@ namespace ErpCore.WebApi.Controllers
         {
             try
             {
-                var tag = await _employeeRepository.GetByIdWithRoleAndLocation(id);
-                if (tag == null)
+                var result = await _employeeRepository.GetByIdWithRoleAndLocation(id);
+                if (result == null)
                 {
                     return NotFound();
                 }
-                return Ok(tag);
+                result.Avatar = _fileService.GetFullImageUrl(result.Avatar);
+                result.CoverImage = _fileService.GetFullImageUrl(result.CoverImage);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -99,28 +102,6 @@ namespace ErpCore.WebApi.Controllers
             }
         }
 
-        /*[HttpPost("Create")]
-        public async Task<IActionResult> Add(EmployeeModel model) 
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return Ok(new Response { Status = "Error", Message = "Please pass the valid data!" });
-                }
-
-                model.setCreateInfo("Admin", DateTime.UtcNow);
-                await _employeeRepository.Add(model);
-                return Ok(new Response { Status = "Success", Message = "User created successfully!" });
-   
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }*/
-
-        
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> CreateWithImage([FromForm] EmployeeModel model)
@@ -128,7 +109,7 @@ namespace ErpCore.WebApi.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                {  
+                {
                     return Ok(new Response { Status = "Failed", Message = "Created Avatar Fail!" });
                 }
                 var CoverImageResult = _fileService.SaveImage(model.CoverImageFilePath!);
@@ -160,7 +141,7 @@ namespace ErpCore.WebApi.Controllers
                 model!.Avatar = AvartarResult;
                 var CoverImageResult = _fileService.SaveImage(CoverImageFilePath!);
                 model!.CoverImage = CoverImageResult;
-               
+
                 await _employeeRepository.Add(model);
                 return Ok(new Response { Status = "Success", Message = "Created Employee successfully!" });
             }
@@ -170,22 +151,28 @@ namespace ErpCore.WebApi.Controllers
             }
         }
 
-        [HttpPut("Update/{id}")]
-        public async Task<IActionResult> Update(int id, EmployeeModel model)
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromForm] EmployeeModel model)
         {
             try
             {
-                if (model.Id != id)
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return Ok(new Response { Status = "Failed", Message = "Created Avatar Fail!" });
                 }
+                var CoverImageResult = _fileService.SaveImage(model.CoverImageFilePath!);
+                model.CoverImage = CoverImageResult;
+                var AvartarResult = _fileService.SaveImage(model.AvatarFilePath!);
+                model.Avatar = AvartarResult;
                 await _employeeRepository.Update(model);
-                return Ok();
+                return Ok(new Response { Status = "Success", Message = "Created Avartar successfully!" });
             }
             catch (Exception ex)
             {
                 return BadRequest();
             }
         }
+
     }
 }

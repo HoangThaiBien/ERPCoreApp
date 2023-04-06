@@ -32,5 +32,34 @@ namespace ErpCore.Business.Logic.Repositories.Implement
 
             return _mapper.Map<EmployeeModel>(entity);
         }
+       
+
+        /*public async Task<EmployeeModel> UpdateWithImage(EmployeeModel model)
+        {
+            var entity = await _context.Employees.FindAsync(model.Id);
+            if (entity != null)
+            {
+                entity = _mapper.Map<Employee>(model); ;
+                entity!.FirstName = model.FirstName;
+                entity.LastName = model.LastName;
+                entity.Description = model.Description;
+                entity.Address = model.Address;
+                entity.PhoneNumber = model.PhoneNumber;
+                entity.Email = model.Email;
+                entity.AcademicLevel = model.AcademicLevel;
+                entity.WorkExperience = model.WorkExperience;
+                entity.Department = model.Department;
+                entity.Role = model.Role;
+                entity.DateOfBirth = model.DateOfBirth;
+                entity.LastUpdateBy = model.LastUpdateBy;
+                entity.LastUpdateAt = model.LastUpdateAt;
+                entity.Avatar = model.Avatar;
+                entity.CoverImage = model.CoverImage;
+                await _context.SaveChangesAsync();
+                return _mapper.Map<EmployeeModel>(entity);
+            }
+            return null;
+        }
+    */
     }
 }

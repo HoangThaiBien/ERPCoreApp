@@ -69,7 +69,7 @@
                         toast: true,
                         position: 'top-end',
                         icon: 'success',
-                        title: '<span style="font-size: 18px">Tạo thành công</span>',
+                        title: '<span style="font-size: 18px">Thành công</span>',
                         showConfirmButton: false,
                         timer: 5000,
                         timerProgressBar: true,
@@ -90,8 +90,8 @@
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
-                        icon: 'success',
-                        title: '<span style="font-size: 18px">Tạo thất bại</span>',
+                        icon: 'error',
+                        title: '<span style="font-size: 18px">Thất bại</span>',
                         showConfirmButton: false,
                         timer: 5000,
                         timerProgressBar: true,
@@ -216,8 +216,8 @@
                                     </div>
                                 </th>
                                 <th>ID</th>
-                                <th>Họ Tên</th>
-                                <th>Mô tả</th>
+                                <th>Họ tên</th>
+                                <th>Vai trò</th>
                                 <th>Email</th>
                                 <th>Số điện thoại</th>
                                 <th>Địa chỉ</th>
@@ -249,25 +249,24 @@
                                                 else
                                                 {
                                                     <img class="avatar-img rounded-circle"
-                                                         src="@Url.Content(item.Avatar.Replace("~", ""))"
+                                                         src="@(item.Avatar) "
                                                          alt="Avatar" />
                                                 }
-
                                             </a>
                                             <a href="student-details.html">@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</a>
                                         </h2>
                                     </td>
-                                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Role)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Email)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Address)</td>
                                     <td class="text-end">
                                         <div class="actions">
-                                            <a href="javascript:;"
+                                            <a href="@Url.Action("Details", "Employee", new { id = item.Id })"
                                                class="btn btn-sm bg-success-light me-2">
                                                 <i class="feather-eye"></i>
                                             </a>
-                                            <a href="edit-student.html"
+                                            <a href="@Url.Action("Edit", "Employee", new { id = item.Id })"
                                                class="btn btn-sm bg-danger-light me-2">
                                                 <i class="feather-edit"></i>
                                             </a>                       

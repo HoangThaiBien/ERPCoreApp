@@ -1,0 +1,259 @@
+﻿@using ErpCore.Database.Enums;
+@model ErpCore.Business.Logic.Dtos.EmployeeModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Notify"] != null && TempData["Notify"]!.ToString() == "Warning")
+{
+    @section ScriptNotify{
+    <script>
+        $(function () {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'warning',
+                title: '<span style="font-size: 18px">Lỗi nhập</span>',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+        });
+    </script>
+   }
+}
+
+@section Links {
+    <title>Thêm mới khách hàng</title>
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/plugins/feather/feather.css" />
+    <link rel="stylesheet" href="~/assets/plugins/icons/flags/flags.css" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+    <script src="~/assets/plugins/ckeditor5-build-classic/ckeditor.js"></script>
+}
+
+@section Scripts {
+    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/feather.min.js"></script>
+    <script src="~/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/assets/plugins/select2/js/select2.min.js"></script>
+    <script src="~/assets/plugins/moment/moment.min.js"></script>
+    <script src="~/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/assets/js/script.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#textDescription'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#textAcademic'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#textExperience'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+}
+
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-sm-12">
+            <div class="page-sub-header">
+                <h3 class="page-title">Cập nhập nhân viên</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="students.html">Nhân viên</a>
+                    </li>
+                    <li class="breadcrumb-item active">Cập nhập</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card comman-shadow">
+            <div class="card-body">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title student-info">
+                                Thông tin nhân viên
+                                <span>
+                                    <a href="javascript:;"><i class="feather-more-vertical"></i></a>
+                                </span>
+                            </h5>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>
+                                    Họ
+                                    <span class="login-danger">*</span>
+                                </label>
+                                <input class="form-control"
+                                       type="text"
+                                       placeholder="Nhập họ" asp-for="FirstName" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>
+                                    Tên
+                                    <span class="login-danger">*</span>
+                                </label>
+                                <input class="form-control"
+                                       type="text"
+                                       placeholder="Nhập tên" asp-for="LastName" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Giới tính <span class="login-danger">*</span></label>
+                                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control"></select>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms calendar-icon">
+                                <label>
+                                    Ngày sinh
+                                    <span class="login-danger">*</span>
+                                </label>
+                                <input class="form-control datetimepicker"
+                                       type="text"
+                                       placeholder="DD-MM-YYYY"
+                                       asp-for="DateOfBirth" />
+                                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Số điện thoại <span class="login-danger">*</span></label>
+                                <input class="form-control"
+                                       type="text"
+                                       placeholder="Nhập số điện thoại"
+                                       asp-for="PhoneNumber" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>E-Mail <span class="login-danger">*</span></label>
+                                <input class="form-control"
+                                       type="text"
+                                       placeholder="Nhập email" asp-for="Email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Địa chỉ <span class="login-danger">*</span></label>
+                                <input class="form-control"
+                                       type="text"
+                                       placeholder="Nhập địa chỉ" asp-for="Address" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Vai trò <span class="login-danger">*</span></label>
+                                <select asp-for="Role" asp-items="Html.GetEnumSelectList<Roles>()" class="form-control"></select>
+                                <span asp-validation-for="Role" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Phòng ban</label>
+                                <select asp-for="Department" asp-items="Html.GetEnumSelectList<Departments>()" class="form-control"></select>
+                                <span asp-validation-for="Department" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Mô tả</label>
+                                <textarea id="textDescription" class="form-control"
+                                          placeholder="Tính cách, kĩ năng nềm,..."
+                                          asp-for="Description"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Trình độ học vấn</label>
+                                <textarea id="textAcademic" class="form-control"
+                                          placeholder="Tốt nghiệp loại giỏi trường..."
+                                          asp-for="AcademicLevel"></textarea>
+                                <span asp-validation-for="AcademicLevel" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                <label>Kinh nghiệm làm việc</label>
+                                <textarea id="textExperience" class="form-control"
+                                          placeholder="Đã có kinh nghiệm..."
+                                          asp-for="WorkExperience"></textarea>
+                                <span asp-validation-for="WorkExperience" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group students-up-files">
+                                <label>Chọn ảnh đại diện (150px X 150px)</label>
+                                <div class="uplod">
+                                    <label class="file-upload image-upbtn mb-0">
+                                        Choose File <input type="file" asp-for="AvatarFilePath" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-4">
+                            <div class="form-group students-up-files">
+                                <label>Chọn ảnh nền (150px X 150px)</label>
+                                <div class="uplod">
+                                    <label class="file-upload image-upbtn mb-0">
+                                        Choose File <input type="file" asp-for="CoverImageFilePath" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="student-submit">
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

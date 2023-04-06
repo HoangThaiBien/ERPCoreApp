@@ -74,7 +74,7 @@ namespace ErpCore.Business.Logic.Repositories.Implement
             return this._environment.WebRootPath + "\\Uploads\\Product\\" + ProductCode;
         }
        
-        public string GetFullImageUrl(string imageUrl)
+        public string GetFullImageUrl(string? imageUrl)
         {
             if (string.IsNullOrEmpty(imageUrl))
                 return "";

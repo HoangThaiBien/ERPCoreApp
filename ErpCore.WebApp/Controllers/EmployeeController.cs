@@ -74,19 +74,37 @@ namespace ErpCore.WebApp.Controllers
         }
 
         
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var result = await _employeeApi.GetEmployeeById(id);
+            return View(result);
         }
 
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit([FromForm] EmployeeModel model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    model.setUpdateInfo(@User.Identity!.Name!, DateTime.UtcNow);
+                    bool result = await _employeeApi.UpdateEmployee(model);
+                    if (result)
+                    {
+                        TempData["Notify"] = "Success";
+                        return RedirectToAction("Index", "Employee");
+                    }
+                    else
+                    {
+                        TempData["Notify"] = "Error";
+                        return View("Index", "Employee");
+                    }
+
+                }
+                TempData["Notify"] = "Warning";
+                return View();
             }
             catch
             {
